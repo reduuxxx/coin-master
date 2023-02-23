@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,10 +13,12 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import MailIcon from "@mui/icons-material/Mail";
 import { NavLink } from "react-router-dom";
+import { DataContext } from "../utils/ContextFile";
 const pages = ["Home", "Market"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
+  const { walletConnection,account } = useContext(DataContext);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -55,7 +57,9 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            <NavLink to="/" className="text-white">Coin-Master</NavLink>
+            <NavLink to="/" className="text-white">
+              Coin-Master
+            </NavLink>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -91,7 +95,11 @@ function Navbar() {
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon color="action" />
                 </Badge>
-                <Typography textAlign="center"><NavLink to="/watchlist" className="text-white">Your WatchList</NavLink></Typography>
+                <Typography textAlign="center">
+                  <NavLink to="/watchlist" className="text-white">
+                    Your WatchList
+                  </NavLink>
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -116,10 +124,15 @@ function Navbar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <MenuItem>
-              <Typography textAlign="center"><NavLink to="/watchlist" className="text-white">Your WatchList</NavLink></Typography>
+              <Typography textAlign="center">
+                <NavLink to="/watchlist" className="text-white">
+                  Your WatchList
+                </NavLink>
+              </Typography>
               <Badge
                 badgeContent={
-                  JSON.parse(localStorage.getItem("watchList")) &&  JSON.parse(localStorage.getItem("watchList")).length
+                  JSON.parse(localStorage.getItem("watchList")) &&
+                  JSON.parse(localStorage.getItem("watchList")).length
                     ? JSON.parse(localStorage.getItem("watchList")).length
                     : 0
                 }
@@ -129,8 +142,8 @@ function Navbar() {
             </MenuItem>
           </Box>
 
-          <Button variant="outlined" color="inherit">
-            Connect Wallet
+          <Button variant="outlined" color="inherit" onClick={walletConnection}>
+            {account ? account.toString().slice(0,10) + "..." + account.toString().slice(35) : "Connect Wallet"}
           </Button>
         </Toolbar>
       </Container>
