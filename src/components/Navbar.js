@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,6 +16,8 @@ import { NavLink } from "react-router-dom";
 import { DataContext } from "../utils/ContextFile";
 
 function Navbar() {
+ 
+
   const { walletConnection, account } = useContext(DataContext);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -119,13 +121,6 @@ function Navbar() {
                   Your WatchList
                 </NavLink>
               </Typography>
-              <Badge
-                badgeContent={
-                  JSON.parse(localStorage.getItem("watchList")).length
-                }
-              >
-                <MailIcon color="white" className="mx-2" />
-              </Badge>
             </MenuItem>
           </Box>
 

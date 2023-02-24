@@ -19,12 +19,13 @@ const ContextFile = ({ children }) => {
     setIsDataAvail(true);
     try {
       if(!query){
-        setCoinsData(coinsData);
+        await getCoinData();
         setIsDataAvail(false);
         return;
       }
       let data = coinsData.filter((item) => item.name.toLowerCase() === query.toLowerCase());
       setCoinsData(data);
+      console.log(data)
       setIsDataAvail(false);
     } catch (error) {
       console.log(error);
