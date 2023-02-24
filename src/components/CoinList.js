@@ -8,7 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import FolderIcon from "@mui/icons-material/Folder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { DataContext } from "../utils/ContextFile";
 
@@ -26,28 +25,27 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 const CoinList = () => {
-  const [watchlist,setWatchlist]=useState([]);
-  const addToWatchList=(item)=>{
-    setWatchlist([...watchlist,item]);
-    console.log("watchlist",watchlist);
-    let newArray = watchlist.filter((item, 
-      index) => watchlist.indexOf(item) === index);
-      localStorage.setItem("watchList",JSON.stringify(newArray));
+  const { coinsData, getCoinsDataByCountry, isDataAvail, searchCoins } =
+    useContext(DataContext);
+  let newArray = [];
+  localStorage.setItem("watchList", JSON.stringify(newArray));
+  const addToWatchList = (item) => {
+    newArray = [...JSON.parse(localStorage.getItem("watchList")), item];
+    localStorage.setItem("watchList", JSON.stringify(newArray));
+  };
 
-  }
-  const { coinsData, currencyTicker, getCoinsDataByCountry, isDataAvail,searchCoins } =
-  useContext(DataContext);
   const [currencyType, setCurrencyType] = useState("usd");
-  const [searchQuery,setSearchQuery]=useState("");
- 
-  const onClickSearch=async(e)=>{
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const onClickSearch = async (e) => {
     e.preventDefault();
     await searchCoins(searchQuery);
-  }
+  };
   const onChangingCurrency = async (e) => {
     setCurrencyType(e.target.value);
     await getCoinsDataByCountry(e.target.value);
   };
+
   return (
     <>
       <Grid item xs={12} md={6}>
@@ -73,14 +71,20 @@ const CoinList = () => {
               placeholder="Search Your Coin (eg. bitcoin)"
               aria-label="Search"
               name="searchQuery"
-              onChange={(e)=>{
+              onChange={(e) => {
                 setSearchQuery(e.target.value);
               }}
               value={searchQuery}
             />
-            <button className="btn btn-lg btn-outline-primary my-2 my-sm-0" type="submit" onClick={(e)=>{
-              onClickSearch(e);
-            }}>Get Coin</button>
+            <button
+              className="btn btn-lg btn-outline-primary my-2 my-sm-0"
+              type="submit"
+              onClick={(e) => {
+                onClickSearch(e);
+              }}
+            >
+              Get Coin
+            </button>
           </form>
           <FormControl style={{ width: "30%" }}>
             <InputLabel id="demo-simple-select-label">Currency</InputLabel>
@@ -95,7 +99,11 @@ const CoinList = () => {
             >
               {currency &&
                 currency.map((item, i) => {
-                  return <MenuItem key={i} value={item}>{item.toUpperCase()}</MenuItem>;
+                  return (
+                    <MenuItem key={i} value={item}>
+                      {item.toUpperCase()}
+                    </MenuItem>
+                  );
                 })}
             </Select>
           </FormControl>
@@ -124,10 +132,15 @@ const CoinList = () => {
                           badgeContent={currencyType.toUpperCase()}
                           color="primary"
                         ></Badge>
-                        <IconButton edge="end" className="mx-2" aria-label="delete" onClick={()=>{
-                          addToWatchList(item);
-                        }}>
-                          <BookmarkBorderIcon   />
+                        <IconButton
+                          edge="end"
+                          color="default"
+                          className="mx-2"
+                          onClick={() => {
+                            addToWatchList(item);
+                          }}
+                        >
+                          <BookmarkBorderIcon />
                         </IconButton>
                       </>
                     }

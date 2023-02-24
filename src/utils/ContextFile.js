@@ -7,8 +7,9 @@ const ContextFile = ({ children }) => {
   const [account, setAccount] = useState("");
   const [coinsData, setCoinsData] = useState([]);
   const [currencyTicker, setCurrencyTicker] = useState(undefined);
-  const [checkList, setCheckList] = useState(undefined);
+  const [checkList, setCheckList] = useState([]);
   const [isDataAvail, setIsDataAvail] = useState(false);
+
   const walletConnection=async()=>{
     let web3= await getWeb3();
     let accounts= await web3.eth.getAccounts();
@@ -82,7 +83,9 @@ const ContextFile = ({ children }) => {
         isDataAvail,
         searchCoins,
         walletConnection,
-        account
+        account,
+        setCheckList,
+        checkList
       }}
     >
       {children}
