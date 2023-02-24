@@ -1,1 +1,4 @@
-# coin-master
+# Coin-master
+npm install 
+npm start 
+
