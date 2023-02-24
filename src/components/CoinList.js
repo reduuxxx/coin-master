@@ -10,7 +10,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { DataContext } from "../utils/ContextFile";
-
 import {
   FormControl,
   Badge,
@@ -137,7 +136,7 @@ const CoinList = () => {
                           color="default"
                           className="mx-2"
                           onClick={() => {
-                            addToWatchList(item);
+                            addToWatchList(i);
                           }}
                         >
                           <BookmarkBorderIcon />
