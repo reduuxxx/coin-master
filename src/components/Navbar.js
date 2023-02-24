@@ -14,27 +14,17 @@ import AdbIcon from "@mui/icons-material/Adb";
 import MailIcon from "@mui/icons-material/Mail";
 import { NavLink } from "react-router-dom";
 import { DataContext } from "../utils/ContextFile";
-const pages = ["Home", "Market"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
-  const { walletConnection,account } = useContext(DataContext);
+  const { walletConnection, account } = useContext(DataContext);
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -131,10 +121,7 @@ function Navbar() {
               </Typography>
               <Badge
                 badgeContent={
-                  JSON.parse(localStorage.getItem("watchList")) &&
                   JSON.parse(localStorage.getItem("watchList")).length
-                    ? JSON.parse(localStorage.getItem("watchList")).length
-                    : 0
                 }
               >
                 <MailIcon color="white" className="mx-2" />
@@ -143,7 +130,11 @@ function Navbar() {
           </Box>
 
           <Button variant="outlined" color="inherit" onClick={walletConnection}>
-            {account ? account.toString().slice(0,10) + "..." + account.toString().slice(35) : "Connect Wallet"}
+            {account
+              ? account.toString().slice(0, 10) +
+                "..." +
+                account.toString().slice(35)
+              : "Connect Wallet"}
           </Button>
         </Toolbar>
       </Container>
